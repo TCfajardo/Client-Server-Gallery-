@@ -5,11 +5,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
 
+    private List<ImageGallery> imageList;
+
     public Server() {
         final int PUERTO = 5000;
+        imageList = new ArrayList<>();
 
         try {
             // Crear un ServerSocket que escuche en el puerto especificado
@@ -54,8 +59,20 @@ public class Server {
                 // Obtener los bytes de la imagen
                 byte[] imageBytes = image.getImageBytes();
 
-                // Guardar los bytes de la imagen en un archivo en el servidor
-                saveImageToFile(imageBytes, "nombre_del_archivo.jpg");
+                // Obtener el nombre del archivo enviado por el cliente
+                String fileName = image.getFileName();
+
+                // Guardar los bytes de la imagen en un archivo en el servidor con el nombre del
+                // archivo seleccionado
+                for (int i = 0; i < imageList.size() + 1; i++) {
+
+                    saveImageToFile(imageBytes, "archivo" + i + ".jpg");
+                }
+
+                // Agregar la imagen a la lista del servidor
+                synchronized (imageList) {
+                    imageList.add(image);
+                }
 
                 // Cerrar la conexión con el cliente
                 clienteSocket.close();

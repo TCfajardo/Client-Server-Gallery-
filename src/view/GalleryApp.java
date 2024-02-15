@@ -12,7 +12,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class GalleryApp extends JFrame {
@@ -102,11 +101,4 @@ public class GalleryApp extends JFrame {
         cargarButton.addActionListener(listener);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new GalleryApp();
-            }
-        });
-    }
 }

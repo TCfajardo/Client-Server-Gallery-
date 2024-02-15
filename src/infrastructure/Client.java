@@ -11,16 +11,19 @@ import javax.imageio.ImageIO;
 
 public class Client {
 
+    File pathString;
+    Socket sc;
+
     public Client() {
         final String host = "127.0.0.1";
         final int port = 5000;
 
         try {
-            Socket sc = new Socket(host, port);
+            sc = new Socket(host, port);
             System.out.println("Cliente conectado...");
 
             // Aquí deberías cargar la imagen desde algún lugar antes de enviarla
-            ImageGallery image = loadImage();
+            ImageGallery image = loadImage(pathString);
 
             // Crear flujo de salida para enviar datos al servidor
             ObjectOutputStream outputStream = new ObjectOutputStream(sc.getOutputStream());
@@ -37,14 +40,10 @@ public class Client {
         }
     }
 
-    private ImageGallery loadImage() {
+    public ImageGallery loadImage(File selectedFile) {
         try {
-            // Especifica la ruta del archivo de la imagen
-            String imagePath = "C:\\Users\\ACER_COREI5\\Desktop\\cedula frontal.jpg";//// url a cambiar -- llega por el
-                                                                                     //// filechooser
-
             // Lee la imagen desde el archivo
-            BufferedImage bufferedImage = javax.imageio.ImageIO.read(new File(imagePath));
+            BufferedImage bufferedImage = ImageIO.read(selectedFile);
 
             // Convierte la BufferedImage a un arreglo de bytes
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -55,6 +54,11 @@ public class Client {
             ImageGallery image = new ImageGallery();
             image.setImageBytes(imageBytes);
 
+            // Enviar la imagen al servidor
+            try (ObjectOutputStream outputStream = new ObjectOutputStream(sc.getOutputStream())) {
+                outputStream.writeObject(image);
+            }
+
             return image;
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +66,4 @@ public class Client {
         }
     }
 
-    public static void main(String[] args) {
-        new Client();
-    }
 }

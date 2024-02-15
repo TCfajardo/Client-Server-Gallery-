@@ -25,7 +25,7 @@ public class GalleryPresenter {
 
         if (selectedFile != null) {
             // Llamar al método del cliente para enviar la imagen
-            ImageGallery image = client.enviarImagen(selectedFile);
+            ImageGallery image = client.loadImage(selectedFile);
             // Aquí puedes implementar la lógica para mostrar la imagen en la galería
             view.verGaleria();
         }
@@ -37,6 +37,6 @@ public class GalleryPresenter {
         GalleryApp view = new GalleryApp();
 
         // Crear instancia del controlador y pasar la vista y el cliente
-        GalleryController controller = new GalleryController(view, client);
+        GalleryPresenter presenter = new GalleryPresenter(view, client);
     }
 }
