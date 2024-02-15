@@ -2,7 +2,7 @@ package infrastructure;
 
 import java.io.Serializable;
 
-public class Image implements Serializable {
+public class ImageGallery implements Serializable {
 
     private byte[] imageBytes;
 

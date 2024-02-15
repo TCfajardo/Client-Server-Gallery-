@@ -20,7 +20,7 @@ public class Client {
             System.out.println("Cliente conectado...");
 
             // Aquí deberías cargar la imagen desde algún lugar antes de enviarla
-            Image image = loadImage();
+            ImageGallery image = loadImage();
 
             // Crear flujo de salida para enviar datos al servidor
             ObjectOutputStream outputStream = new ObjectOutputStream(sc.getOutputStream());
@@ -37,7 +37,7 @@ public class Client {
         }
     }
 
-    private Image loadImage() {
+    private ImageGallery loadImage() {
         try {
             // Especifica la ruta del archivo de la imagen
             String imagePath = "C:\\Users\\ACER_COREI5\\Desktop\\cedula frontal.jpg";//// url a cambiar -- llega por el
@@ -52,7 +52,7 @@ public class Client {
             byte[] imageBytes = byteArrayOutputStream.toByteArray();
 
             // Crea una instancia de la clase Image con los bytes de la imagen
-            Image image = new Image();
+            ImageGallery image = new ImageGallery();
             image.setImageBytes(imageBytes);
 
             return image;

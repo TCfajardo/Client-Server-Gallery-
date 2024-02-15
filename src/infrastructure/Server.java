@@ -49,7 +49,7 @@ public class Server {
                 ObjectInputStream inputStream = new ObjectInputStream(clienteSocket.getInputStream());
 
                 // Recibir la imagen desde el cliente
-                Image image = (Image) inputStream.readObject();
+                ImageGallery image = (ImageGallery) inputStream.readObject();
 
                 // Obtener los bytes de la imagen
                 byte[] imageBytes = image.getImageBytes();
