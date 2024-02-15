@@ -1,8 +1,11 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class GalleryApp extends JFrame {
     private JButton cargarButton;
@@ -37,7 +40,7 @@ public class GalleryApp extends JFrame {
         // Configurar la acción del botón "Cargar"
         cargarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cargarImagenes();
+                cargarImagen();
             }
         });
 
@@ -51,14 +54,23 @@ public class GalleryApp extends JFrame {
         setVisible(true);
     }
 
-    private void cargarImagenes() {
-        // Aquí puedes implementar la lógica para cargar las imágenes desde algún directorio o recurso
-        JOptionPane.showMessageDialog(this, "Cargando imagenes...");
+    private void cargarImagen() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccionar Imagen");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de Imagen", "jpg"));
+
+        int returnValue = fileChooser.showOpenDialog(this);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            JOptionPane.showMessageDialog(this, "Archivo seleccionado: " + selectedFile.getAbsolutePath());
+            // Aquí puedes implementar la lógica para cargar la imagen seleccionada
+        }
     }
 
     private void verGaleria() {
         // Aquí puedes implementar la lógica para mostrar las imágenes cargadas en la galería
-        JOptionPane.showMessageDialog(this, "Mostrando galeria...");
+        JOptionPane.showMessageDialog(this, "Mostrando galería...");
     }
 
     public static void main(String[] args) {
