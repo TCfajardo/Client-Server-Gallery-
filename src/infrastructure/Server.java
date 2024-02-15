@@ -55,8 +55,7 @@ public class Server {
                 byte[] imageBytes = image.getImageBytes();
 
                 // Guardar los bytes de la imagen en un archivo en el servidor
-                saveImageToFile(imageBytes, "nombre_del_archivo.jpg"); // Puedes cambiar el nombre y la extensión del
-                                                                       // archivo según tus necesidades
+                saveImageToFile(imageBytes, "nombre_del_archivo.jpg");
 
                 // Cerrar la conexión con el cliente
                 clienteSocket.close();

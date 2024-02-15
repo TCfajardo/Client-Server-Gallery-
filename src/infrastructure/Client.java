@@ -40,8 +40,8 @@ public class Client {
     private Image loadImage() {
         try {
             // Especifica la ruta del archivo de la imagen
-            String imagePath = "C:\\Users\\ACER_COREI5\\Desktop\\cedula frontal.jpg"; // Reemplaza con la ruta de tu
-                                                                                      // imagen
+            String imagePath = "C:\\Users\\ACER_COREI5\\Desktop\\cedula frontal.jpg";//// url a cambiar -- llega por el
+                                                                                     //// filechooser
 
             // Lee la imagen desde el archivo
             BufferedImage bufferedImage = javax.imageio.ImageIO.read(new File(imagePath));
