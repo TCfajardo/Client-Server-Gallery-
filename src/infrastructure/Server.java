@@ -7,29 +7,29 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Server {
 
     private List<ImageGallery> imageList;
 
-    public Server() {
-        final int PUERTO = 5000;
+    public Server(int port) {
         imageList = new ArrayList<>();
 
         try {
             // Crear un ServerSocket que escuche en el puerto especificado
-            ServerSocket servidor = new ServerSocket(PUERTO);
+            ServerSocket server = new ServerSocket(port);
             System.out.println("Servidor iniciado. Esperando conexiones...");
             boolean wait = true;
 
             while (wait) {
                 // Esperar a que un cliente se conecte y aceptar la conexión
-                Socket cliente = servidor.accept();
-                System.out.println("Cliente conectado desde: " + cliente.getInetAddress());
+                Socket client = server.accept();
+                System.out.println("Cliente conectado desde: " + client.getInetAddress());
 
                 // Crear un hilo para manejar la conexión con el cliente
-                Thread clienteThread = new ClienteHandler(cliente);
-                clienteThread.start();
+                Thread clientThread = new ClienteHandler(client);
+                clientThread.start();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -37,21 +37,24 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        new Server();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingresa el numero del puerto: ");
+        int port = scanner.nextInt();
+        new Server(port);
     }
 
     public class ClienteHandler extends Thread {
-        private Socket clienteSocket;
+        private Socket clientSocket;
 
         public ClienteHandler(Socket socket) {
-            this.clienteSocket = socket;
+            this.clientSocket = socket;
         }
 
         @Override
         public void run() {
             try {
                 // Crear flujo de entrada para recibir datos del cliente
-                ObjectInputStream inputStream = new ObjectInputStream(clienteSocket.getInputStream());
+                ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
                 // Recibir la imagen desde el cliente
                 ImageGallery image = (ImageGallery) inputStream.readObject();
@@ -59,14 +62,11 @@ public class Server {
                 // Obtener los bytes de la imagen
                 byte[] imageBytes = image.getImageBytes();
 
-                // Obtener el nombre del archivo enviado por el cliente
-                String fileName = image.getFileName();
-
                 // Guardar los bytes de la imagen en un archivo en el servidor con el nombre del
                 // archivo seleccionado
                 for (int i = 0; i < imageList.size() + 1; i++) {
 
-                    saveImageToFile(imageBytes, "archivo" + i + ".jpg");
+                    saveImageToFile(imageBytes, "file" + i + ".jpg");
                 }
 
                 // Agregar la imagen a la lista del servidor
@@ -75,7 +75,7 @@ public class Server {
                 }
 
                 // Cerrar la conexión con el cliente
-                clienteSocket.close();
+                clientSocket.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
