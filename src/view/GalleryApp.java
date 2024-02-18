@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -21,7 +23,7 @@ public class GalleryApp extends JFrame {
 
     public GalleryApp() {
         super("Galeria de Imagenes");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Evitar que se cierre directamente
         setSize(800, 800);
 
         // Crear los botones
@@ -47,7 +49,7 @@ public class GalleryApp extends JFrame {
         // Configurar la acción del botón "Cargar"
         cargarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cargarImagen();
+               //mostrarFileChooser();
             }
         });
 
@@ -58,27 +60,30 @@ public class GalleryApp extends JFrame {
             }
         });
 
+        // Agregar un WindowListener para detectar el cierre del frame
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                cerrarAplicacion();
+            }
+        });
+
         setVisible(true);
     }
 
-    private void cargarImagen() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Seleccionar Imagen");
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de Imagen", "jpg"));
-
-        int returnValue = fileChooser.showOpenDialog(this);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            JOptionPane.showMessageDialog(this, "Archivo seleccionado: " + selectedFile.getAbsolutePath());
-            // Aquí puedes implementar la lógica para cargar la imagen seleccionada
-        }
+    public void verGaleria() {
+        // Aquí puedes implementar la lógica para mostrar las imágenes cargadas en la galería
+        JOptionPane.showMessageDialog(this, "Mostrando galería...");
     }
 
-    public void verGaleria() {
-        // Aquí puedes implementar la lógica para mostrar las imágenes cargadas en la
-        // galería
-        JOptionPane.showMessageDialog(this, "Mostrando galería...");
+    private void cerrarAplicacion() {
+        int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro que quieres salir?", "Confirmar salida",
+                JOptionPane.YES_NO_OPTION);
+        if (option == JOptionPane.YES_OPTION) {
+            // Realizar acciones de limpieza, cerrar conexiones, etc.
+            // Luego cerrar la aplicación
+            System.exit(0);
+        }
     }
 
     public File mostrarFileChooser() {
@@ -92,6 +97,7 @@ public class GalleryApp extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             JOptionPane.showMessageDialog(this, "Archivo seleccionado: " + selectedFile.getAbsolutePath());
             // Aquí puedes implementar la lógica para cargar la imagen seleccionada
+            this.dispose();
             return selectedFile;
         }
         return null;

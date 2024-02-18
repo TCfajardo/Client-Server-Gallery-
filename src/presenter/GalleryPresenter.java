@@ -17,7 +17,7 @@ public class GalleryPresenter {
 
         // Configurar la acción del botón "Cargar" en la vista
         view.setCargarButtonListener(e -> cargarImagen());
-    }
+    }   
 
     private void cargarImagen() {
         // Llamar al método de la vista para mostrar el JFileChooser
@@ -26,9 +26,7 @@ public class GalleryPresenter {
         if (selectedFile != null) {
             // Llamar al método del cliente para enviar la imagen
             ImageGallery image = client.loadImage(selectedFile);
-            // Aquí puedes implementar la lógica para mostrar la imagen en la galería
-            view.verGaleria();
-        }
+            }
     }
 
     public static void main(String[] args) {
