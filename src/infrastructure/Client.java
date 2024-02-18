@@ -31,12 +31,17 @@ public class Client {
             // Enviar la imagen al servidor
             outputStream.writeObject(image);
 
-            sc.close();
-
-            System.out.println("Cliente desconectado");
-
         } catch (Exception e) {
             System.err.println(e);
+        }
+    }
+
+    public void closeConnection(){
+        try {
+            sc.close();
+            System.out.println("Client disconnected");
+        } catch (IOException e) {
+            System.out.println("Error closing connection to the server "+ e.getMessage());
         }
     }
 
@@ -65,5 +70,4 @@ public class Client {
             return null; // Manejo de errores: Devuelve null o implementa una lógica adecuada.
         }
     }
-
 }
