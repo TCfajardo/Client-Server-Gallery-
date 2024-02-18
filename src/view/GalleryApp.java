@@ -12,51 +12,71 @@ import java.io.File;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class GalleryApp extends JFrame {
-    private JButton cargarButton;
-    private JButton verButton;
-    private JPanel galleryPanel;
+import presenter.Actions;
 
-    public GalleryApp() {
+public class GalleryApp extends JFrame {
+    private JButton loadButton;
+    private JButton showButton;
+    private JPanel galleryPanel, southJPanel, northPanel;
+
+    public GalleryApp(ActionListener actionListener) {
         super("Galeria de Imagenes");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Evitar que se cierre directamente
-        setSize(800, 800);
+        setSize(500, 500);
+        setLocation(500, 100);
+        setLayout(new BorderLayout());
+
+        northPanel = new JPanel();
+        northPanel.setBackground(Color.BLACK);
+        northPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        JLabel tittleApp = new JLabel("BIENVENIDO!");
+        tittleApp.setForeground(Color.WHITE);
+        northPanel.add(tittleApp);
+        this.add(northPanel, BorderLayout.NORTH);
 
         // Crear los botones
-        cargarButton = new JButton("Cargar imagen");
-        verButton = new JButton("Ver galeria");
+        loadButton = new JButton("Cargar imagen");
+        loadButton.setBackground(Color.decode("#A4EDFE"));
+        loadButton.setActionCommand(Actions.LOAD_BUTTON.toString());
+        loadButton.addActionListener(actionListener);
+        showButton = new JButton("Ver galeria");
+        showButton.setBackground(Color.decode("#A4EDFE"));
+        showButton.setActionCommand(Actions.VIEW_GALLERY.toString());
+        showButton.addActionListener(actionListener);
 
         // Crear el panel de la galería
         galleryPanel = new JPanel();
         galleryPanel.setBackground(Color.WHITE);
+        galleryPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        JLabel message = new JLabel("Decide si quieres cargar una foto o ver tu galeria!");
+        galleryPanel.add(message);
+        galleryPanel.setVisible(true);
+        this.add(galleryPanel, BorderLayout.CENTER);
 
-        // Configurar el layout del frame
-        setLayout(new BorderLayout());
-
+        southJPanel = new JPanel();
+        southJPanel.setBackground(Color.BLACK);
         // Agregar los botones al panel superior
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(cargarButton);
-        buttonPanel.add(verButton);
-        add(buttonPanel, BorderLayout.NORTH);
-
-        // Agregar el panel de la galería al centro del frame
-        add(galleryPanel, BorderLayout.CENTER);
+        southJPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        southJPanel.add(loadButton);
+        southJPanel.add(showButton);
+        this.add(southJPanel, BorderLayout.SOUTH);
 
         // Configurar la acción del botón "Cargar"
-        cargarButton.addActionListener(new ActionListener() {
+        loadButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               //mostrarFileChooser();
+                // mostrarFileChooser();
             }
         });
 
         // Configurar la acción del botón "Ver"
-        verButton.addActionListener(new ActionListener() {
+        showButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                verGaleria();
+                showGallery();
             }
         });
 
@@ -64,29 +84,25 @@ public class GalleryApp extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                cerrarAplicacion();
+                closeApplication();
             }
         });
-
-        setVisible(true);
     }
 
-    public void verGaleria() {
-        // Aquí puedes implementar la lógica para mostrar las imágenes cargadas en la galería
+    public void showGallery() {
+        // mostrar to do
         JOptionPane.showMessageDialog(this, "Mostrando galería...");
     }
 
-    private void cerrarAplicacion() {
+    private void closeApplication() {
         int option = JOptionPane.showConfirmDialog(this, "¿Estás seguro que quieres salir?", "Confirmar salida",
                 JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
-            // Realizar acciones de limpieza, cerrar conexiones, etc.
-            // Luego cerrar la aplicación
             System.exit(0);
         }
     }
 
-    public File mostrarFileChooser() {
+    public File showFileChooser() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Seleccionar Imagen");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -103,8 +119,8 @@ public class GalleryApp extends JFrame {
         return null;
     }
 
-    public void setCargarButtonListener(ActionListener listener) {
-        cargarButton.addActionListener(listener);
+    public void setFrameVisible(boolean visible) {
+        setVisible(visible);
     }
 
 }

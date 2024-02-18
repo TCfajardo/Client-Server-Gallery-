@@ -29,7 +29,7 @@ public class Server {
                 System.out.println("Cliente conectado desde: " + client.getInetAddress());
 
                 // Crear un hilo para manejar la conexión con el cliente
-                Thread clientThread = new ClienteHandler(client);
+                Thread clientThread = new ClientHandler(client);
                 clientThread.start();
             }
         } catch (IOException e) {
@@ -44,10 +44,10 @@ public class Server {
         new Server(port);
     }
 
-    public class ClienteHandler extends Thread {
+    public class ClientHandler extends Thread {
         private Socket clientSocket;
 
-        public ClienteHandler(Socket socket) {
+        public ClientHandler(Socket socket) {
             this.clientSocket = socket;
         }
 
@@ -60,7 +60,7 @@ public class Server {
                 processImage(inputStream);
 
                 // Cerrar la conexión con el cliente
-                clienteSocket.close();
+                clientSocket.close();
                 System.out.println("Client disconnected...");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -92,7 +92,7 @@ public class Server {
                 }
 
                 // Cerrar la conexión con el cliente
-                clienteSocket.close();
+                clientSocket.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

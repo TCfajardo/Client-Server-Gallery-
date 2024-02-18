@@ -13,13 +13,14 @@ public class Client {
 
     File pathString;
     Socket sc;
+    private Client client;
 
-    public Client() {
-        final String host = "127.0.0.1";
-        final int port = 5000;
+    public Client(int port, String ip, String clientName) {
+        final String host = ip;
+        final int portConnection = port;
 
         try {
-            sc = new Socket(host, port);
+            sc = new Socket(host, portConnection);
             System.out.println("Cliente conectado...");
 
             // Aquí deberías cargar la imagen desde algún lugar antes de enviarla
@@ -36,12 +37,16 @@ public class Client {
         }
     }
 
-    public void closeConnection(){
+    public Client() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public void closeConnection() {
         try {
             sc.close();
             System.out.println("Client disconnected");
         } catch (IOException e) {
-            System.out.println("Error closing connection to the server "+ e.getMessage());
+            System.out.println("Error closing connection to the server " + e.getMessage());
         }
     }
 
