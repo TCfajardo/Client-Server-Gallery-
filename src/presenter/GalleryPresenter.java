@@ -19,8 +19,6 @@ public class GalleryPresenter implements ActionListener {
         this.formView = new Form(this);
         this.view = new GalleryApp(this);
         this.client = new Client(0, null, null);
-        // Configurar la acción del botón "Cargar" en la vista
-        // view.setLoadButtonListener(e -> loadImage());
     }
 
     private void loadImage() {

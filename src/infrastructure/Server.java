@@ -59,8 +59,7 @@ public class Server {
 
                 processImage(inputStream);
 
-                // Cerrar la conexión con el cliente
-                clientSocket.close();
+                // No cerrar la conexión aquí
                 System.out.println("Client disconnected...");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -76,23 +75,18 @@ public class Server {
                 // Obtener los bytes de la imagen
                 byte[] imageBytes = image.getImageBytes();
 
-                // Obtener el nombre del archivo enviado por el cliente
-                String fileName = image.getFileName();
+                // Generar un nombre único para la imagen usando un timestamp
+                String fileName = "imagen_" + System.currentTimeMillis() + ".jpg";
 
-                // Guardar los bytes de la imagen en un archivo en el servidor con el nombre del
-                // archivo seleccionado
-                for (int i = 0; i < imageList.size() + 1; i++) {
-
-                    saveImageToFile(imageBytes, "archivo" + i + ".jpg");
-                }
+                // Guardar los bytes de la imagen en un archivo en el servidor
+                saveImageToFile(imageBytes, fileName);
 
                 // Agregar la imagen a la lista del servidor
                 synchronized (imageList) {
                     imageList.add(image);
                 }
 
-                // Cerrar la conexión con el cliente
-                clientSocket.close();
+                System.out.println("Imagen guardada como: " + fileName);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -105,4 +99,5 @@ public class Server {
             }
         }
     }
+
 }
