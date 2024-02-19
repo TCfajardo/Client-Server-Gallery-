@@ -27,14 +27,14 @@ public class GalleryApp extends JFrame {
     public GalleryApp(ActionListener actionListener) {
         super("Galeria de Imagenes");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Evitar que se cierre directamente
-        setSize(500, 500);
+        setSize(600, 700);
         setLocation(500, 100);
         setLayout(new BorderLayout());
 
         northPanel = new JPanel();
         northPanel.setBackground(Color.BLACK);
         northPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
-        JLabel tittleApp = new JLabel("BIENVENIDO!");
+        JLabel tittleApp = new JLabel("¡BIENVENIDO!");
         tittleApp.setForeground(Color.WHITE);
         northPanel.add(tittleApp);
         this.add(northPanel, BorderLayout.NORTH);
@@ -53,7 +53,7 @@ public class GalleryApp extends JFrame {
         galleryPanel = new JPanel();
         galleryPanel.setBackground(Color.WHITE);
         galleryPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
-        JLabel message = new JLabel("Decide si quieres cargar una foto o ver tu galeria!");
+        JLabel message = new JLabel("¿Quieres cargar una imagen o ver la galeria?");
         galleryPanel.add(message);
         galleryPanel.setVisible(true);
         this.add(galleryPanel, BorderLayout.CENTER);
@@ -99,6 +99,7 @@ public class GalleryApp extends JFrame {
                 JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             System.exit(0);
+            
         }
     }
 
@@ -112,8 +113,6 @@ public class GalleryApp extends JFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             JOptionPane.showMessageDialog(this, "Archivo seleccionado: " + selectedFile.getAbsolutePath());
-            // Aquí puedes implementar la lógica para cargar la imagen seleccionada
-            this.dispose();
             return selectedFile;
         }
         return null;
