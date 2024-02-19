@@ -19,6 +19,7 @@ public class GalleryPresenter implements ActionListener {
         this.formView = new Form(this);
         this.view = new GalleryApp(this);
         this.client = new Client(0, null, null);
+
     }
 
     private void loadImage() {
@@ -55,6 +56,7 @@ public class GalleryPresenter implements ActionListener {
                 break;
             case VIEW_GALLERY:
                 System.out.println("Ver--------------");
+                formView.setFrameVisiblePanelCenter(true);
 
                 break;
         }

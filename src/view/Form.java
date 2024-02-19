@@ -109,4 +109,8 @@ public class Form extends JFrame {
         galleryApp.showFileChooser();
     }
 
+    public void setFrameVisiblePanelCenter(boolean visible) {
+        galleryApp.setFrameVisiblePanelCenter(visible);
+    }
+
 }

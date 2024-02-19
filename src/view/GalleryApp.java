@@ -23,6 +23,7 @@ public class GalleryApp extends JFrame {
     private JButton loadButton;
     private JButton showButton;
     private JPanel galleryPanel, southJPanel, northPanel;
+    private GalleryClient galleryClient;
 
     public GalleryApp(ActionListener actionListener) {
         super("Galeria de Imagenes");
@@ -30,6 +31,9 @@ public class GalleryApp extends JFrame {
         setSize(500, 500);
         setLocation(500, 100);
         setLayout(new BorderLayout());
+
+        this.galleryClient = new GalleryClient();
+        this.add(galleryClient, BorderLayout.CENTER);
 
         northPanel = new JPanel();
         northPanel.setBackground(Color.BLACK);
@@ -121,6 +125,10 @@ public class GalleryApp extends JFrame {
 
     public void setFrameVisible(boolean visible) {
         setVisible(visible);
+    }
+
+    public void setFrameVisiblePanelCenter(boolean visible) {
+        galleryClient.setFrameVisible(visible);
     }
 
 }
