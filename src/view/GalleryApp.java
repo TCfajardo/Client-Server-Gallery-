@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -30,7 +33,7 @@ public class GalleryApp extends JFrame {
     public GalleryApp(ActionListener actionListener) {
         super("Galeria de Imagenes");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Evitar que se cierre directamente
-        setSize(600, 700);
+        setSize(500, 200);
         setLocation(500, 100);
         setLayout(new BorderLayout());
 
@@ -49,7 +52,7 @@ public class GalleryApp extends JFrame {
         loadButton.setBackground(Color.decode("#A4EDFE"));
         loadButton.setActionCommand(Actions.LOAD_BUTTON.toString());
         loadButton.addActionListener(actionListener);
-        showButton = new JButton("Ver galeria");
+        showButton = new JButton("Descargar galeria");
         showButton.setBackground(Color.decode("#A4EDFE"));
         showButton.setActionCommand(Actions.VIEW_GALLERY.toString());
         showButton.addActionListener(actionListener);
@@ -58,7 +61,7 @@ public class GalleryApp extends JFrame {
         galleryPanel = new JPanel();
         galleryPanel.setBackground(Color.WHITE);
         galleryPanel.setLayout(new BorderLayout());
-        JLabel message = new JLabel("¿Quieres cargar una imagen o ver la galeria?");
+        JLabel message = new JLabel("¿Quieres cargar una imagen o descargar la galeria?");
         galleryPanel.add(message, BorderLayout.NORTH);
         galleryPanel.add(galleryClient, BorderLayout.CENTER);
 
@@ -98,7 +101,8 @@ public class GalleryApp extends JFrame {
 
     public void showGallery() {
         // mostrar to do
-        JOptionPane.showMessageDialog(this, "Mostrando galería...");
+        JOptionPane.showMessageDialog(this, "Descargar galería...");
+        downloadClientImagesFolder();
     }
 
     private void closeApplication() {
@@ -124,6 +128,44 @@ public class GalleryApp extends JFrame {
         }
         return null;
     }
+    
+    public void downloadClientImagesFolder() {
+        // Ruta de la carpeta clientImgs en el directorio del proyecto
+        String clientImgsPath = "src/clientImgs";
+
+        // Ruta de la carpeta Descargas del sistema operativo del cliente
+        String downloadsPath = System.getProperty("user.home") + File.separator + "Downloads";
+
+        try {
+            // Copiar la carpeta clientImgs en la carpeta Descargas
+            copyFolder(new File(clientImgsPath), new File(downloadsPath));
+            System.out.println("Carpeta clientImgs descargada en la carpeta Descargas.");
+        } catch (IOException e) {
+            System.err.println("Error al descargar la carpeta clientImgs: " + e.getMessage());
+        }
+    }
+
+    private void copyFolder(File source, File destination) throws IOException {
+        // Verificar si la carpeta de destino existe, si no, crearla
+        if (!destination.exists()) {
+            destination.mkdirs();
+        }
+
+        // Obtener la lista de archivos y subdirectorios en la carpeta de origen
+        File[] files = source.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                File destinationFile = new File(destination, file.getName());
+                if (file.isDirectory()) {
+                    // Si es un directorio, llamar recursivamente a copyFolder
+                    copyFolder(file, destinationFile);
+                } else {
+                    // Si es un archivo, copiarlo al destino
+                    Files.copy(file.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+        }
+    }
 
     public void setFrameVisible(boolean visible) {
         setVisible(visible);
@@ -133,8 +175,5 @@ public class GalleryApp extends JFrame {
         galleryClient.setFrameVisible(visible);
     }
 
-    public void displayImages(List<ImageGallery> imageList) {
-        galleryClient.displayImages(imageList);
-    }
 
 }

@@ -45,9 +45,9 @@ public class Client {
     }
 
     public ImageGallery loadImage(File selectedFile) {
-
         if (sc == null) {
             System.err.println("El socket no está inicializado correctamente.");
+            return null;
         }
 
         try {
@@ -59,8 +59,7 @@ public class Client {
             ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
             byte[] imageBytes = byteArrayOutputStream.toByteArray();
 
-            // Crea una instancia de la clase ImageGallery y establece los bytes de la
-            // imagen
+            // Crea una instancia de la clase ImageGallery y establece los bytes de la imagen
             ImageGallery image = new ImageGallery();
             image.setImageBytes(imageBytes);
 
@@ -69,11 +68,12 @@ public class Client {
                 outputStream.writeObject(image);
                 System.out.println("Imagen enviada al servidor.");
             }
-
+            closeConnection();
             return image;
         } catch (IOException e) {
             System.err.println("Error al cargar la imagen: " + e.getMessage());
             return null;
         }
     }
+
 }

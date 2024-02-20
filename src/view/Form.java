@@ -158,8 +158,4 @@ public class Form extends JFrame {
         galleryApp.setFrameVisiblePanelCenter(visible);
     }
 
-    public void displayImages(List<ImageGallery> imageList) {
-        galleryApp.displayImages(imageList);
-    }
-
 }

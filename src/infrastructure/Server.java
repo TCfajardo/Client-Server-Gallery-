@@ -1,5 +1,6 @@
 package infrastructure;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -118,6 +119,20 @@ public class Server {
                 System.out.println("Imagen guardada como: " + filePath);
             }
         }
+
+        private void sendImageFolderToClient(Socket clientSocket) {
+            try {
+                ObjectOutputStream outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                File folder = new File("src/clientImgs");
+                File[] files = folder.listFiles();
+                outputStream.writeObject(files);
+                outputStream.flush();
+                System.out.println("Carpeta de imágenes enviada al cliente.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
         private void sendImageListToClient(ObjectOutputStream outputStream) {
             try {

@@ -1,42 +1,34 @@
 package view;
 
 import java.awt.Color;
-import java.util.List;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import infrastructure.ImageGallery;
 
 public class GalleryClient extends JPanel {
 
-    public GalleryClient() {
-        setBackground(Color.RED);
-        setVisible(false);
+	public GalleryClient() {
+        setBackground(Color.decode("#5BF8C6"));
+        
+        // Establecer el layout como GridBagLayout
+        setLayout(new GridBagLayout());
+        
+        // Crear el JLabel
+        JLabel jLabel = new JLabel("Galería descargada en la carpeta /Descargas.");
+        
+        // Crear un GridBagConstraints para centrar el JLabel
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0; // Estirar en el eje X
+        gbc.weighty = 1.0; // Estirar en el eje Y
+        gbc.anchor = GridBagConstraints.CENTER; // Centrar en el contenedor
+        add(jLabel, gbc);
     }
 
-    public void displayImages(List<ImageGallery> imageList) {
-        removeAll(); // Elimina cualquier imagen anteriormente mostrada
-
-        for (ImageGallery image : imageList) {
-            try {
-                // Convierte los bytes de la imagen a un ImageIcon
-                ImageIcon imageIcon = new ImageIcon(image.getImageBytes());
-
-                // Crea un JLabel para mostrar la imagen
-                JLabel imageLabel = new JLabel(imageIcon);
-
-                // Agrega el JLabel al panel GalleryClient
-                add(imageLabel);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        revalidate(); // Actualiza el panel
-        repaint(); // Vuelve a pintar el panel
-    }
 
     public void setFrameVisible(boolean visible) {
         this.setVisible(visible);

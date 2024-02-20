@@ -24,18 +24,14 @@ public class GalleryPresenter implements ActionListener {
     }
 
     private void loadImage() {
-        // Llamar al método de la vista para mostrar el JFileChooser
         File selectedFile = view.showFileChooser();
-
         if (selectedFile != null) {
-            // Llamar al método del cliente para enviar la imagen
-            ImageGallery image = client.loadImage(selectedFile);
+            client.loadImage(selectedFile);
         }
     }
 
     public static void main(String[] args) {
-
-        GalleryPresenter presenter = new GalleryPresenter();
+    	new GalleryPresenter();
     }
 
     @Override
@@ -58,10 +54,7 @@ public class GalleryPresenter implements ActionListener {
             case VIEW_GALLERY:
                 System.out.println("Ver--------------");
                 formView.setFrameVisiblePanelCenter(true);
-                List<ImageGallery> receivedImages = client.receiveImageList();
-                if (receivedImages != null) {
-                    formView.displayImages(receivedImages);
-                }
+                
                 break;
         }
 
