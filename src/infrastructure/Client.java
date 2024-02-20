@@ -16,11 +16,9 @@ public class Client {
     private Socket sc;
 
     public Client(int port, String ip, String clientName) {
-        final String host = ip;
-        final int portConnection = port;
 
         try {
-            sc = new Socket(host, portConnection);
+            sc = new Socket(ip, port);
             System.out.println("Cliente conectado..." + clientName);
         } catch (IOException e) {
             System.err.println("Error al conectar con el servidor: " + e.getMessage());
@@ -47,6 +45,11 @@ public class Client {
     }
 
     public ImageGallery loadImage(File selectedFile) {
+
+        if (sc == null) {
+            System.err.println("El socket no está inicializado correctamente.");
+        }
+
         try {
             // Lee la imagen desde el archivo
             BufferedImage bufferedImage = ImageIO.read(selectedFile);

@@ -40,8 +40,23 @@ public class Server {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Ingresa el numero del puerto: ");
-        int port = scanner.nextInt();
+        int port = 0;
+        boolean validPort = false;
+
+        while (!validPort) {
+            try {
+                System.out.print("Ingresa el numero del puerto: ");
+                port = Integer.parseInt(scanner.nextLine());
+                if (port > 0 && port <= 65535) {
+                    validPort = true;
+                } else {
+                    System.out.println("El puerto debe ser un número entre 1 y 65535.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, ingresa un número válido.");
+            }
+        }
+
         new Server(port);
     }
 
@@ -91,9 +106,16 @@ public class Server {
         }
 
         private void saveImageToFile(byte[] imageBytes, String fileName) throws IOException {
-            try (FileOutputStream fileOutputStream = new FileOutputStream(fileName)) {
+            // Especifica la ruta completa de la carpeta donde deseas guardar las imágenes
+            String folderPath = "src/clientImgs/";
+
+            // Combinar la ruta de la carpeta con el nombre del archivo
+            String filePath = folderPath + fileName;
+
+            // Guardar los bytes de la imagen en un archivo en la carpeta especificada
+            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
                 fileOutputStream.write(imageBytes);
-                System.out.println("Imagen guardada como: " + fileName);
+                System.out.println("Imagen guardada como: " + filePath);
             }
         }
 
