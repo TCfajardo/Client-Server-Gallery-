@@ -4,8 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -22,6 +24,16 @@ public class Client {
             System.out.println("Cliente conectado..." + clientName);
         } catch (IOException e) {
             System.err.println("Error al conectar con el servidor: " + e.getMessage());
+        }
+    }
+
+    public List<ImageGallery> receiveImageList() {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(sc.getInputStream());
+            return (List<ImageGallery>) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

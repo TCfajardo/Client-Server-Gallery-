@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import infrastructure.ImageGallery;
 import presenter.Actions;
 
 public class GalleryApp extends JFrame {
@@ -33,7 +35,6 @@ public class GalleryApp extends JFrame {
         setLayout(new BorderLayout());
 
         this.galleryClient = new GalleryClient();
-        this.add(galleryClient, BorderLayout.CENTER);
 
         northPanel = new JPanel();
         northPanel.setBackground(Color.BLACK);
@@ -56,9 +57,11 @@ public class GalleryApp extends JFrame {
         // Crear el panel de la galería
         galleryPanel = new JPanel();
         galleryPanel.setBackground(Color.WHITE);
-        galleryPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
+        galleryPanel.setLayout(new BorderLayout());
         JLabel message = new JLabel("¿Quieres cargar una imagen o ver la galeria?");
-        galleryPanel.add(message);
+        galleryPanel.add(message, BorderLayout.NORTH);
+        galleryPanel.add(galleryClient, BorderLayout.CENTER);
+
         galleryPanel.setVisible(true);
         this.add(galleryPanel, BorderLayout.CENTER);
 
@@ -103,7 +106,7 @@ public class GalleryApp extends JFrame {
                 JOptionPane.YES_NO_OPTION);
         if (option == JOptionPane.YES_OPTION) {
             System.exit(0);
-            
+
         }
     }
 
@@ -128,6 +131,10 @@ public class GalleryApp extends JFrame {
 
     public void setFrameVisiblePanelCenter(boolean visible) {
         galleryClient.setFrameVisible(visible);
+    }
+
+    public void displayImages(List<ImageGallery> imageList) {
+        galleryClient.displayImages(imageList);
     }
 
 }

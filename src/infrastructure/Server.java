@@ -3,6 +3,7 @@ package infrastructure;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
@@ -93,6 +94,15 @@ public class Server {
             try (FileOutputStream fileOutputStream = new FileOutputStream(fileName)) {
                 fileOutputStream.write(imageBytes);
                 System.out.println("Imagen guardada como: " + fileName);
+            }
+        }
+
+        private void sendImageListToClient(ObjectOutputStream outputStream) {
+            try {
+                outputStream.writeObject(imageList);
+                System.out.println("Lista de imágenes enviada al cliente.");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

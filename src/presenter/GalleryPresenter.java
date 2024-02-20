@@ -3,6 +3,7 @@ package presenter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 
 import infrastructure.Client;
 import infrastructure.ImageGallery;
@@ -57,9 +58,13 @@ public class GalleryPresenter implements ActionListener {
             case VIEW_GALLERY:
                 System.out.println("Ver--------------");
                 formView.setFrameVisiblePanelCenter(true);
-
+                List<ImageGallery> receivedImages = client.receiveImageList();
+                if (receivedImages != null) {
+                    formView.displayImages(receivedImages);
+                }
                 break;
         }
 
     }
+
 }
