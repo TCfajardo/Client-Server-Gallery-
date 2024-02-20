@@ -58,9 +58,6 @@ public class Server {
                 ObjectInputStream inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
                 processImage(inputStream);
-
-                // No cerrar la conexión aquí
-                System.out.println("Client disconnected...");
             } catch (IOException e) {
                 e.printStackTrace();
             }
