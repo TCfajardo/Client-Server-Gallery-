@@ -67,15 +67,15 @@ public class Form extends JFrame {
         centerPanel.setLayout(gridLayout);
 
         // Creación de componentes del formulario
-        JLabel portLabel = new JLabel("Número del puerto:");
+        JLabel portLabel = new JLabel("  Número del puerto:");
         portTextField = new JTextField(10);
         portTextField.setMinimumSize(new Dimension(100, 50));
 
-        JLabel ipLabel = new JLabel("Dirección IP:");
+        JLabel ipLabel = new JLabel("  Dirección IP:");
         IPTextField = new JTextField(15);
         IPTextField.setMinimumSize(new Dimension(100, 50));
 
-        JLabel clientNameLabel = new JLabel("Nombre del Cliente:");
+        JLabel clientNameLabel = new JLabel("  Nombre del Cliente:");
         clientNameTextField = new JTextField(20);
         clientNameTextField.setMinimumSize(new Dimension(100, 50));
 
@@ -83,7 +83,7 @@ public class Form extends JFrame {
         southPanel = new JPanel();
         southPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
         southPanel.setBackground(Color.BLACK);
-        JButton okButton = new JButton("Aceptar");
+        JButton okButton = new JButton("Conectar");
         okButton.setPreferredSize(new Dimension(100, 20));
         okButton.setBackground(Color.decode("#A3FED9"));
         southPanel.add(okButton);

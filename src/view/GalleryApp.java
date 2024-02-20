@@ -62,7 +62,7 @@ public class GalleryApp extends JFrame {
         galleryPanel.setBackground(Color.WHITE);
         galleryPanel.setLayout(new BorderLayout());
         JLabel message = new JLabel("¿Quieres cargar una imagen o descargar la galeria?");
-        galleryPanel.add(message, BorderLayout.NORTH);
+        //galleryPanel.add(message, BorderLayout.NORTH);
         galleryPanel.add(galleryClient, BorderLayout.CENTER);
 
         galleryPanel.setVisible(true);
